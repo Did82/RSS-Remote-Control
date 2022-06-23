@@ -1,6 +1,6 @@
 import robot from 'robotjs';
 
-const messageHandler = (ws, command) => {
+const messageHandler = (command) => {
   const mousePos = robot.getMousePos();
   const mouseX = mousePos.x;
   const mouseY = mousePos.y;

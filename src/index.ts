@@ -7,14 +7,19 @@ import commandParser from './utils/commandParser';
 const HTTP_PORT = 3000;
 
 wss.on('connection', (ws) => {
+  console.log('WebSocket connection opened');
   const duplex = new createWebSocketStream(ws);
   duplex.on('data', (data) => {
     console.log('received: %s', data);
     const command = commandParser(data.toString());
-    const result = messageHandler(ws, command);
+    const result = messageHandler(command);
     ws.send(result);
+  });
+  duplex.on('end', () => {
+    console.log('client disconnected');
   });
 });
 
-console.log(`Start static http server on the ${HTTP_PORT} port!`);
-httpServer.listen(HTTP_PORT);
+httpServer.listen(HTTP_PORT, () => {
+  console.log(`🚀 Start static http server on the ${HTTP_PORT} port!`);
+});
