@@ -8,12 +8,12 @@ const HTTP_PORT = 3000;
 
 wss.on('connection', (ws) => {
   console.log('WebSocket connection opened');
-  const duplex = new createWebSocketStream(ws);
-  duplex.on('data', (data) => {
+  const duplex = new createWebSocketStream(ws, { decodeStrings: false });
+  duplex.on('data', async (data) => {
     console.log('received: %s', data);
     const command = commandParser(data.toString());
-    const result = messageHandler(command);
-    ws.send(result);
+    const result = await messageHandler(command);
+    duplex.write(result);
   });
   duplex.on('end', () => {
     console.log('client disconnected');
