@@ -5,10 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "ts-node-dev src/index.ts",
-    "build": "npm run clean && npm run lint && tsc -p tsconfig.json",
-    "start:prod": "npm run build && node dist/index.js",
-    "lint": "eslint src/**/*.ts",
-    "clean": "ts-node src/utils/clean.ts",
     "start": "ts-node src/index.ts"
   },
   "repository": {
